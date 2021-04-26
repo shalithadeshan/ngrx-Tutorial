@@ -1,6 +1,11 @@
 <div>
+  <div class="my-3">{{ myName$ | async }}</div>
   <input type="text" placeholder="Enter Value" [(ngModel)]="value">
   <div class="mt-3">
     <button class="btn btn-primary" (click)="onAdd()">Add</button>
   </div>
+</div>
+
+<div>
+  <button class="btn btn-danger mt-2" (click)="onChaneName()">Change Name</button>
 </div>

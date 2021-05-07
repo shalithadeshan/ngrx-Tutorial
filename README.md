@@ -6,6 +6,12 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 npm install @ngrx/store
 
+### This code segment should add to app-modules
+
+StoreModule.forRoot({})
+
+<hr/>
+
 ## How to install # NGRX - Store-devtools
 
 npm install @ngrx/store-devtools
@@ -15,3 +21,13 @@ StoreDevtoolsModule.instrument({ <br>
 maxAge: 25, // Retains last 25 states  <br>
 logOnly: environment.production, // Restrict extension to log-only mode <br>
 }),
+
+<hr/>
+
+## How to install # NGRX - Effects
+
+npm install @ngrx/effects
+
+### This code segment should add to app-modules
+
+EffectsModule.forRoot([])

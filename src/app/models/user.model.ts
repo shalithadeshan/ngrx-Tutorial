@@ -6,11 +6,11 @@ export class User {
     private expirationDate: Date
   ) {}
 
-  get expireDate() {
+  get expireDate(): any {
     return this.expirationDate;
   }
 
-  get userToken() {
+  get userToken(): any {
     return this.token;
   }
 }

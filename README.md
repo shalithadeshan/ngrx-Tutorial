@@ -44,6 +44,4 @@ StoreRouterConnectingModule.forRoot()
 
 npm install @ngrx/entity
 
-## How to install # NGRX - Data
 
-npm install @ngrx/data

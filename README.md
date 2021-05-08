@@ -40,10 +40,10 @@ npm install @ngrx/router-store
 
 StoreRouterConnectingModule.forRoot()
 
-## How to install # NGRX - Router Store
+## How to install # NGRX - Entity
 
 npm install @ngrx/entity
 
-### This code segment should add to app-modules
+## How to install # NGRX - Data
 
-StoreRouterConnectingModule.forRoot()
+npm install @ngrx/data

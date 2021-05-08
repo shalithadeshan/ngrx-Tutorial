@@ -19,6 +19,7 @@ import {PostModel} from '../../models/post.model';
 import {ROUTER_NAVIGATION, RouterNavigatedAction} from '@ngrx/router-store';
 import {of} from 'rxjs';
 import {Update} from '@ngrx/entity';
+import {dummyAction} from '../../auth/state/auth-action';
 
 @Injectable()
 export class PostsEffects {
@@ -32,14 +33,16 @@ export class PostsEffects {
   loadPosts$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(loadPosts),
-      // withLatestFrom(this.store.select(getPosts)),
-      mergeMap((action) => {
-        return this.postsService.getPosts().pipe(
-          map((posts) => {
-            return loadPostsSuccess({posts});
-          })
-        );
-        // return of(dummyAction());
+      withLatestFrom(this.store.select(getPosts)),
+      mergeMap(([action, posts]) => {
+        if (!posts.length) {
+          return this.postsService.getPosts().pipe(
+            map((posts) => {
+              return loadPostsSuccess({posts});
+            })
+          );
+        }
+        return of(dummyAction());
       })
     );
   });
@@ -99,17 +102,17 @@ export class PostsEffects {
       map((r: RouterNavigatedAction) => {
         return r.payload.routerState['params']['id'];
       }),
-      // withLatestFrom(this.store.select(getPosts)),
-      switchMap((id) => {
-        // if (!posts.length) {
+      withLatestFrom(this.store.select(getPosts)),
+      switchMap(([id, posts]) => {
+        if (!posts.length) {
            return this.postsService.getPostById(id).pipe(
             map((post) => {
               const postData = [{ ...post, id }];
               return loadPostsSuccess({ posts: postData });
             })
           );
-        // }
-        // return of(dummyAction());
+        }
+        return of(dummyAction());
       })
     );
   });

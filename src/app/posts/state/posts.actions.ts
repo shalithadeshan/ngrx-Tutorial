@@ -1,5 +1,6 @@
 import {createAction, props} from '@ngrx/store';
 import {PostModel} from '../../models/post.model';
+import {Update} from '@ngrx/entity';
 
 
 export const ADD_POST_ACTION = '[posts page] add post';
@@ -23,7 +24,8 @@ export const updatePost = createAction(UPDATE_POST_ACTION,
 );
 export const updatePostSuccess = createAction(
   UPDATE_POST_SUCCESS,
-  props<{ post: PostModel }>()
+  // props<{ post: PostModel }>()
+  props<{ post: Update<PostModel>}>()
 );
 export const deletePost = createAction(DELETE_POST_ACTION,
   props<{ id: string }>()

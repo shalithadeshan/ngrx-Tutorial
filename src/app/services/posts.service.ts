@@ -45,4 +45,9 @@ export class PostsService {
       `https://angular-project-1540e-default-rtdb.firebaseio.com/posts/${id}.json`
     );
   }
+  getPostById(id: string): Observable<PostModel> {
+    return this.http.get<PostModel>(
+      `https://angular-project-1540e-default-rtdb.firebaseio.com/posts/${id}.json`
+    );
+  }
 }

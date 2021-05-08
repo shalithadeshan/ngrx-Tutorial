@@ -22,36 +22,46 @@ export class EditPostComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      // console.log(params.get('id'));
-      const id = params.get('id');
-      this.postSubscription = this.store
-        .select(getPostById, {id})
-        .subscribe((data) => {
-        this.post = data;
-        this.createForm();
-        // console.log(this.post);
-      });
-    });
-    // this.createForm();
-    // this.store.select(getPostById).subscribe((post) => {
-    //   if (post) {
-    //     this.post = post;
-    //     this.postForm.patchValue({
-    //       title: post.title,
-    //       description: post.description,
-    //     });
-    //   }
+    // this.route.paramMap.subscribe((params) => {
+    //   // console.log(params.get('id'));
+    //   const id = params.get('id');
+    //   this.postSubscription = this.store
+    //     .select(getPostById, {id})
+    //     .subscribe((data) => {
+    //     this.post = data;
+    //     this.createForm();
+    //     // console.log(this.post);
+    //   });
     // });
+    this.createForm();
+    this.postSubscription = this.store.select(getPostById).subscribe((post) => {
+      if (post) {
+        this.post = post;
+        this.postForm.patchValue({
+          title: post.title,
+          description: post.description,
+        });
+      }
+    });
   }
 
   createForm(): void {
+    // this.postForm = new FormGroup({
+    //   title: new FormControl(this.post.title, [
+    //     Validators.required,
+    //     Validators.minLength(6),
+    //   ]),
+    //   description: new FormControl(this.post.description, [
+    //     Validators.required,
+    //     Validators.minLength(10),
+    //   ]),
+    // });
     this.postForm = new FormGroup({
-      title: new FormControl(this.post.title, [
+      title: new FormControl(null, [
         Validators.required,
         Validators.minLength(6),
       ]),
-      description: new FormControl(this.post.description, [
+      description: new FormControl(null, [
         Validators.required,
         Validators.minLength(10),
       ]),

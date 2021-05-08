@@ -31,3 +31,19 @@ npm install @ngrx/effects
 ### This code segment should add to app-modules
 
 EffectsModule.forRoot([])
+
+## How to install # NGRX - Router Store
+
+npm install @ngrx/router-store
+
+### This code segment should add to app-modules
+
+StoreRouterConnectingModule.forRoot()
+
+## How to install # NGRX - Router Store
+
+npm install @ngrx/entity
+
+### This code segment should add to app-modules
+
+StoreRouterConnectingModule.forRoot()

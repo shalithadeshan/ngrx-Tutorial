@@ -13,9 +13,12 @@ import {
   updatePost,
   updatePostSuccess
 } from './posts.actions';
-import {map, mergeMap, switchMap, withLatestFrom} from 'rxjs/operators';
+import {filter, map, mergeMap, switchMap, withLatestFrom} from 'rxjs/operators';
 import {getPosts} from './posts.selector';
 import {PostModel} from '../../models/post.model';
+import {ROUTER_NAVIGATION, RouterNavigatedAction} from '@ngrx/router-store';
+import {of} from 'rxjs';
+import {Update} from '@ngrx/entity';
 
 @Injectable()
 export class PostsEffects {
@@ -61,7 +64,14 @@ export class PostsEffects {
       switchMap((action) => {
         return this.postsService.updatePost(action.post).pipe(
           map((data) => {
-            return updatePostSuccess({post: action.post});
+            const updatedPost: Update<PostModel> = {
+              id: action.post.id,
+              changes: {
+                ...action.post,
+              },
+            };
+            // return updatePostSuccess({post: action.post});
+            return updatePostSuccess({post: updatedPost});
           })
         );
       })
@@ -77,6 +87,29 @@ export class PostsEffects {
             return deletePostSuccess({id: action.id});
           })
         );
+      })
+    );
+  });
+  getSinglePost$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(ROUTER_NAVIGATION),
+      filter((r: RouterNavigatedAction) => {
+        return r.payload.routerState.url.startsWith('posts/details');
+      }),
+      map((r: RouterNavigatedAction) => {
+        return r.payload.routerState['params']['id'];
+      }),
+      // withLatestFrom(this.store.select(getPosts)),
+      switchMap((id) => {
+        // if (!posts.length) {
+           return this.postsService.getPostById(id).pipe(
+            map((post) => {
+              const postData = [{ ...post, id }];
+              return loadPostsSuccess({ posts: postData });
+            })
+          );
+        // }
+        // return of(dummyAction());
       })
     );
   });
